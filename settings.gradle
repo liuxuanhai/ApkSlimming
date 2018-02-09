@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':res_guard_core'
