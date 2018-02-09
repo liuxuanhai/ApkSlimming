@@ -81,6 +81,8 @@ https://developer.android.google.cn/studio/build/shrink-code.html#shrink-resourc
 
 ### 7、资源混淆与7zip压缩
 
+#### [资源混淆工程](https://github.com/zhaopingfu/ApkSlimming/tree/master/res_guard_core)
+
 资源混淆配合7zip压缩，减小apk大小，增加破解难度(微信)
 
 #### 7.1:资源混淆
@@ -127,6 +129,7 @@ android通过AssetManager和Resources获得一个图片或者xml等资源。其�
 
 解析参考资料：
 https://github.com/google/android-arscblamer
+
 格式参考资料：
 http://androidxref.com/6.0.1_r10/xref/frameworks/base/include/androidfw/ResourceTypes.h
 
