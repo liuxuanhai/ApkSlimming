@@ -165,8 +165,13 @@ public class Obfuscater {
         return null;
     }
 
-    public void obfuscate() throws IOException, InterruptedException {
-        String old_dir_name = Main.APK_PATH + "/app";
+    /**
+     * @param dir 路径，带有 /
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void obfuscate(String dir) throws IOException, InterruptedException {
+        String old_dir_name = Client.APK_PATH + dir + "/app";
         File old_app = new File(old_dir_name);
         FileUtils.rmdir(old_app);
         // 解压apk 并且获得文件与是否压缩表
@@ -195,27 +200,30 @@ public class Obfuscater {
         StringPoolRef specStringPoolRef = buildStringPoolRef(mArsc.mSpecNames, false);
 
         // arsc临时文件
-        File arscFile = new File(Main.APK_PATH + "/temp/resources.arsc");
+        File arscFile = new File(Client.APK_PATH + dir + "/temp/resources.arsc");
         FileUtils.rmdir(arscFile.getParentFile());
         mArsc.createFile(tableStringPoolRef, specStringPoolRef, arscFile);
 
         // 修改res下目录与文件名
         obfuscate(old_app, arscFile.getParentFile());
         // 压缩apk文件
-        File outDir = new File(Main.APK_PATH);
+        File outDir = new File(Client.APK_PATH + dir);
         // 普通打包
         packing(arscFile.getParentFile(), outDir);
         // 使用7zip打包
         sevenZipPacking(arscFile.getParentFile(), outDir);
         // 生成 mapping 文件
-        createMapping();
+        createMapping(dir);
     }
 
     /**
      * 生成 mapping 文件
+     *
+     * @param dir
      */
-    private void createMapping() {
-        File mappingFile = new File(Main.APK_PATH + "/mapping", "resources.txt");
+    private void createMapping(String dir) {
+        System.out.println("===生成mapping文件");
+        File mappingFile = new File(Client.APK_PATH + dir + "/mapping", "resources.txt");
         // 先删掉之前的
         if (mappingFile.exists()) {
             mappingFile.delete();
@@ -261,6 +269,7 @@ public class Obfuscater {
      * @param dst
      */
     private void sevenZipPacking(File src, File dst) throws IOException, InterruptedException {
+        System.out.println("====使用7zip打包");
         // 打包、对齐与签名
         /**
          * 打包
@@ -339,6 +348,7 @@ public class Obfuscater {
      * @throws Exception
      */
     private void packing(File src, File dst) throws IOException, InterruptedException {
+        System.out.println("===普通打包");
         // 打包、对齐与签名
         /**
          * 打包
