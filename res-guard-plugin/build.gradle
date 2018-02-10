@@ -1,0 +1,25 @@
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+apply from: './bintray.gradle'
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 引入 gdk
+    implementation localGroovy()
+    implementation gradleApi()
+    implementation 'com.android.tools.build:gradle:3.0.0'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

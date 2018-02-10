@@ -1,0 +1,55 @@
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+    }
+}
+
+// 源代码打包任务
+task sourcesJar(type: Jar) {
+    baseName 'resGuard'
+    classifier 'sources'// 分类器,区分其他jar包
+    from sourceSets.main.allSource
+}
+
+// 文档包任务
+task docJar(type: Jar, dependsOn: [javadoc, groovydoc]) {
+    baseName 'resGuard'
+    classifier 'doc' // 分类器,区分其他jar包
+    from javadoc.destinationDir, groovydoc.destinationDir
+}
+
+// 配置工程工件,也就是jar产出的配置
+artifacts {
+    archives sourcesJar
+    archives docJar
+}
+
+group "com.pf.resGuard"
+version "1.0.0"
+
+/**
+ * 上传到本地仓库
+ */
+apply plugin: 'maven-publish'
+publishing {
+    publications {
+        optimizer(MavenPublication) {
+            from components.java
+            artifactId = "resGuard"
+
+            artifact sourcesJar
+            artifact docJar
+
+            // pom文件配置
+            pom.withXml {
+                def root = asNode()
+                def licensesNode = root.appendNode('licenses').appendNode('license')
+                licensesNode.appendNode('name', 'resGuard, Version 2.0.0')
+                licensesNode.appendNode('url', '')
+                licensesNode.appendNode('distribution', 'repo')
+                licensesNode.appendNode('comments', 'A business-friendly OSS license')
+            }
+        }
+    }
+}

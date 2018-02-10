@@ -1,5 +1,28 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.dongnao.optimizer'
+apply plugin: 'com.pf.resguard'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.pf.resGuard:resGuard:1.0.0'
+    }
+}
+
+resGuard {
+    outputPath "${project.buildDir}/outputs/resGuard"
+    sevenZDirs = ['png', 'jpg', 'jpeg', 'gif', 'resources.arsc']
+    signingConfigs {
+        keyAlias 'androiddebugkey'
+        keyPassword 'android'
+        storeFile "${project.projectDir}/debug.keystore"
+        storePassword 'android'
+    }
+}
 
 android {
     compileSdkVersion 26

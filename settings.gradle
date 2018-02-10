@@ -1,1 +1,1 @@
-include ':app', ':res_guard_core'
+include ':app', ':res_guard_core', ':res-guard-plugin'
