@@ -34,7 +34,7 @@ version "1.0.0"
 apply plugin: 'maven-publish'
 publishing {
     publications {
-        optimizer(MavenPublication) {
+        resGuard(MavenPublication) {
             from components.java
             artifactId = "resGuard"
 
@@ -45,11 +45,42 @@ publishing {
             pom.withXml {
                 def root = asNode()
                 def licensesNode = root.appendNode('licenses').appendNode('license')
-                licensesNode.appendNode('name', 'resGuard, Version 2.0.0')
-                licensesNode.appendNode('url', '')
+                licensesNode.appendNode('name', 'resGuard, Version 1.0.0')
+                licensesNode.appendNode('url', 'https://github.com/zhaopingfu/ApkSlimming/tree/master/res-guard-plugin')
                 licensesNode.appendNode('distribution', 'repo')
                 licensesNode.appendNode('comments', 'A business-friendly OSS license')
             }
+        }
+    }
+}
+
+/**
+ * 上传到jcenter
+ */
+apply plugin: 'com.jfrog.bintray'
+bintray {
+    user = 'zhaopf'
+    key = userkey // 这里的userkey定义在gradle.properties
+    // 上传的内容
+    publications = ['resGuard']
+    override = true
+    pkg {
+        repo = 'androidlib'// 需要上传的仓库名
+        name = 'resGuard'// 上传到jcenter的项目名
+        // userOrg = 'bintray_user'// 可选的,不传的话默认是上面的user
+        licenses = ['Apache-2.0']// 开源许可
+        // 这里的地址是不会验证的,随便输入都可以,不配置也可以
+        websiteUrl = 'https://github.com/zhaopingfu/ApkSlimming'
+        issueTrackerUrl = 'https://github.com/zhaopingfu/ApkSlimming'
+        vcsUrl = 'https://github.com/zhaopingfu/ApkSlimming'
+        githubRepo = 'zhaopingfu/ApkSlimming'
+        version {
+            // 使用外面的version
+            // name = '1.0-Final'
+            desc = 'Resource confusion in Android apk'
+            released = new Date()
+            vcsTag = '1.0.0'// 版本控制里面的版本控制,比如svn,git
+            attributes = ['gradle-plugin': '1.0.0']
         }
     }
 }
