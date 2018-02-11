@@ -79,7 +79,7 @@
 
 https://developer.android.google.cn/studio/build/shrink-code.html#shrink-resources
 
-### 7、资源混淆与7zip压缩
+### 7、[资源混淆与7zip压缩](https://github.com/zhaopingfu/ApkSlimming/tree/master/res-guard-plugin)
 
 #### [资源混淆工程](https://github.com/zhaopingfu/ApkSlimming/tree/master/res_guard_core)
 
@@ -145,6 +145,7 @@ http://androidxref.com/6.0.1_r10/xref/frameworks/base/include/androidfw/Resource
 进一步减小apk大小：
 	v1/v2签名？
 https://source.android.com/security/apksigning/
+
 	全版本允许：  只使用 v1 方案
 	全版本允许：  同时使用 v1 和 v2 方案
 	>=7.0版本：	只使用 v2 方案

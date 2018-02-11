@@ -6,12 +6,9 @@ buildscript {
     repositories {
         google()
         jcenter()
-        // jcenter暂时没有通过，只能这样了，通过了就可以把这个删掉了
-        maven {
-            url 'https://dl.bintray.com/zhaopf/androidlib'
-        }
     }
     dependencies {
+        classpath 'com.dongnao.optimizer:optimizer-picture:2.0.0'
         classpath 'com.pf.resGuard:resGuard:1.0.0'
     }
 }
